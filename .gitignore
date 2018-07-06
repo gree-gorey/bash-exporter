@@ -10,3 +10,6 @@
 
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
+
+cmd/bash-exporter/bash-exporter
+cmd/bash-exporter/*.sh
