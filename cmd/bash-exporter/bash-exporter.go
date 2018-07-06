@@ -10,7 +10,7 @@ import (
 	"sync"
 	"time"
 
-	"bitbucket.org/gree-gorey/ch-exporter/pkg/run"
+	"github.com/gree-gorey/bash-exporter/pkg/run"
 	"github.com/prometheus/client_golang/prometheus"
 )
 
