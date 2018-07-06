@@ -15,7 +15,7 @@ import (
 )
 
 var (
-	webapiMetrics *prometheus.GaugeVec
+	verbMetrics *prometheus.GaugeVec
 )
 
 func main() {
@@ -27,14 +27,14 @@ func main() {
 	flag.Parse()
 	pathArray := strings.Split(*path, "/")
 	name := strings.Split(pathArray[len(pathArray)-1], ".")[0]
-	webapiMetrics = prometheus.NewGaugeVec(
+	verbMetrics = prometheus.NewGaugeVec(
 		prometheus.GaugeOpts{
 			Name: fmt.Sprintf("%s_%s", *prefix, name),
 			Help: "tests",
 		},
-		[]string{"kind"},
+		[]string{"verb"},
 	)
-	prometheus.MustRegister(webapiMetrics)
+	prometheus.MustRegister(verbMetrics)
 	http.Handle("/metrics", prometheus.Handler())
 	go Run(int(*interval), *path, *debug)
 	log.Fatal(http.ListenAndServe(*addr, nil))
@@ -55,9 +55,9 @@ func Run(interval int, path string, debug bool) {
 			}
 			log.Println(string(ser))
 		}
-		webapiMetrics.Reset()
+		verbMetrics.Reset()
 		for metric, value := range o.Result {
-			webapiMetrics.With(prometheus.Labels{"kind": metric}).Set(float64(value))
+			verbMetrics.With(prometheus.Labels{"verb": metric}).Set(float64(value))
 		}
 		time.Sleep(time.Duration(interval) * time.Second)
 	}
