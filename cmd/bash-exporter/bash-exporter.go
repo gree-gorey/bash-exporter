@@ -43,7 +43,9 @@ func main() {
 
 	var names []string
   for _, f := range files {
-		names = append(names, f.Name())
+		if (f.Name()[0:1] != ".") {
+			names = append(names, f.Name())
+		}
   }
 
 	http.Handle("/metrics", prometheus.Handler())
@@ -60,7 +62,7 @@ func Run(interval int, path string, names []string, debug bool) {
 			o := run.Output{}
 			o.Job = strings.Split(name, ".")[0]
 			oArr = append(oArr, &o)
-			thisPath := path + name
+			thisPath := path + "/" + name
 			p := run.Params{UseWg: true, Wg: &wg, Path: &thisPath}
 			go o.RunJob(&p)
 		}

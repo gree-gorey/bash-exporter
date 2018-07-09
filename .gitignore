@@ -13,3 +13,4 @@
 
 cmd/bash-exporter/bash-exporter
 cmd/bash-exporter/*.sh
+examples/.*
