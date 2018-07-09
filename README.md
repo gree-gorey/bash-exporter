@@ -9,7 +9,7 @@ Usage of ./bash-exporter:
   -interval int
     	Interval for metrics collection in seconds (default 300)
   -path string
-    	path to script (default "/usr/local/bash-exporter/run.sh")
+    	path to directory with bash scripts (default "/scripts")
   -prefix string
     	Prefix for metrics (default "bash")
   -web.listen-address string
@@ -17,4 +17,5 @@ Usage of ./bash-exporter:
 ```
 
 ## TODO
-- [ ] Docker image
+- [x] Docker image
+- [x] Several scripts

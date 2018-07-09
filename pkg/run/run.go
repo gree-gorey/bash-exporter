@@ -8,6 +8,7 @@ import (
 
 type Output struct {
 	Result map[string]float64 `json:""`
+	Job    string             `json:""`
 }
 
 func (o *Output) RunJob(p *Params) {
