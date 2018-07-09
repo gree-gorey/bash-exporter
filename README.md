@@ -1,8 +1,9 @@
 # bash-exporter
 
-Prometheus exporter for bash scripts
+Simple & minimalistic Prometheus exporter for bash scripts.
 
 ## Installation
+Use [Docker image](https://hub.docker.com/r/greegorey/bash-exporter/) or binary file from [releases](https://github.com/gree-gorey/bash-exporter/releases).
 
 ## Usage
 
@@ -18,7 +19,8 @@ Usage of ./bash-exporter:
     	Prefix for metrics (default "bash")
   -web.listen-address string
     	Address on which to expose metrics (default ":9300")
-```
+```  
+
 Just point `-path` flag to the directory with your bash scripts. Names of the files (`(.*).sh`) will be used as the `job` label. Bash scripts should return valid json (see [examples](https://github.com/gree-gorey/bash-exporter/tree/master/examples)).
 
 Example output:
