@@ -1,4 +1,4 @@
-# bash-exporter
+# Prometheus bash exporter
 
 Simple & minimalistic Prometheus exporter for bash scripts.
 
