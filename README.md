@@ -2,6 +2,9 @@
 
 Simple & minimalistic Prometheus exporter for bash scripts.
 
+[![](https://images.microbadger.com/badges/image/greegorey/bash-exporter.svg)](https://microbadger.com/images/greegorey/bash-exporter "Get your own image badge on microbadger.com")
+[![](https://images.microbadger.com/badges/version/greegorey/bash-exporter.svg)](https://microbadger.com/images/greegorey/bash-exporter "Get your own version badge on microbadger.com")
+
 ## Installation
 Use [Docker image](https://hub.docker.com/r/greegorey/bash-exporter/) or binary file from [releases](https://github.com/gree-gorey/bash-exporter/releases).
 
