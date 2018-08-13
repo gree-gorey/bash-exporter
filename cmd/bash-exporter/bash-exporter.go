@@ -4,12 +4,12 @@ import (
 	// "encoding/json"
 	"flag"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"strings"
 	"sync"
 	"time"
-	"io/ioutil"
 
 	"github.com/gree-gorey/bash-exporter/pkg/run"
 	"github.com/prometheus/client_golang/prometheus"
@@ -37,16 +37,16 @@ func main() {
 	prometheus.MustRegister(verbMetrics)
 
 	files, err := ioutil.ReadDir(*path)
-  if err != nil {
-      log.Fatal(err)
-  }
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	var names []string
-  for _, f := range files {
-		if (f.Name()[0:1] != ".") {
+	for _, f := range files {
+		if f.Name()[0:1] != "." {
 			names = append(names, f.Name())
 		}
-  }
+	}
 
 	http.Handle("/metrics", prometheus.Handler())
 	go Run(int(*interval), *path, names, *debug)
