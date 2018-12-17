@@ -23,16 +23,23 @@ func main() {
 	addr := flag.String("web.listen-address", ":9300", "Address on which to expose metrics")
 	interval := flag.Int("interval", 300, "Interval for metrics collection in seconds")
 	path := flag.String("path", "/scripts", "path to directory with bash scripts")
+	labels := flag.String("labels", "hostname,env", "additioanal labels")
 	prefix := flag.String("prefix", "bash", "Prefix for metrics")
 	debug := flag.Bool("debug", false, "Debug log level")
 	flag.Parse()
+
+	var labelsArr []string
+
+	labelsArr = strings.Split(*labels, ",")
+	labelsArr = append(labelsArr, "verb",  "job")
 
 	verbMetrics = prometheus.NewGaugeVec(
 		prometheus.GaugeOpts{
 			Name: fmt.Sprintf("%s", *prefix),
 			Help: "bash exporter metrics",
 		},
-		[]string{"verb", "job"},
+		// []string{"verb", "job"},
+		labelsArr,
 	)
 	prometheus.MustRegister(verbMetrics)
 
@@ -49,11 +56,11 @@ func main() {
 	}
 
 	http.Handle("/metrics", prometheus.Handler())
-	go Run(int(*interval), *path, names, *debug)
+	go Run(int(*interval), *path, names, labelsArr, *debug)
 	log.Fatal(http.ListenAndServe(*addr, nil))
 }
 
-func Run(interval int, path string, names []string, debug bool) {
+func Run(interval int, path string, names []string, labelsArr []string, debug bool) {
 	for {
 		var wg sync.WaitGroup
 		oArr := []*run.Output{}
@@ -76,8 +83,17 @@ func Run(interval int, path string, names []string, debug bool) {
 		// }
 		verbMetrics.Reset()
 		for _, o := range oArr {
-			for metric, value := range o.Result {
-				verbMetrics.With(prometheus.Labels{"verb": metric, "job": o.Job}).Set(float64(value))
+
+			for metric, value := range o.Schema.Results {
+				for _, label := range labelsArr {
+					if _, ok := o.Schema.Labels[label]; !ok {
+					   o.Schema.Labels[label] = ""
+					}
+				}
+				o.Schema.Labels["verb"] = metric
+				o.Schema.Labels["job"] = o.Job
+				fmt.Println(o.Schema.Labels)
+				verbMetrics.With(prometheus.Labels(o.Schema.Labels)).Set(float64(value))
 			}
 		}
 		time.Sleep(time.Duration(interval) * time.Second)

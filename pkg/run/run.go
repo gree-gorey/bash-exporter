@@ -7,8 +7,13 @@ import (
 )
 
 type Output struct {
-	Result map[string]float64 `json:""`
-	Job    string             `json:""`
+	Schema Schema `json:""`
+	Job    string `json:""`
+}
+
+type Schema struct {
+	Results map[string]float64 `json:"results"`
+	Labels map[string]string `json:"labels"`
 }
 
 func (o *Output) RunJob(p *Params) {
@@ -25,7 +30,7 @@ func (o *Output) RunExec(path *string) {
 		log.Fatal(err)
 	}
 
-	err = json.Unmarshal(out, &o.Result)
+	err = json.Unmarshal(out, &o.Schema)
 	if err != nil {
 		log.Fatal(err)
 	}

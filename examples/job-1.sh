@@ -1,5 +1,5 @@
 #!/bin/sh
 
-echo "{\"items\": 21}"
+echo '{"labels": {"env": "dev"}, "results": {"items": 21} }'
 
 exit 0
