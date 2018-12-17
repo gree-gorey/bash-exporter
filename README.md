@@ -17,6 +17,8 @@ Usage of ./bash-exporter:
     	Debug log level
   -interval int
     	Interval for metrics collection in seconds (default 300)
+  -labels string
+    	additioanal labels (default "hostname,env")
   -path string
     	path to directory with bash scripts (default "/scripts")
   -prefix string

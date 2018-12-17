@@ -12,5 +12,7 @@
 *.out
 
 cmd/bash-exporter/bash-exporter
+cmd/bash-exporter/bash-exporter-linux
+cmd/bash-exporter/bash-exporter-macos
 cmd/bash-exporter/*.sh
 examples/.*
