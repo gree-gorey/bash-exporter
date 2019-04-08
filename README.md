@@ -9,6 +9,20 @@ Simple & minimalistic Prometheus exporter for bash scripts.
 ## Installation
 Use [Docker image](https://hub.docker.com/r/greegorey/bash-exporter/) or binary file from [releases](https://github.com/gree-gorey/bash-exporter/releases).
 
+## Docker quick start
+
+```console
+$ docker run -v $PWD/examples:/scripts -p 9300:9300 greegorey/bash-exporter:2.0.0
+```
+
+```console
+$ curl -s 127.1:9300/metrics | grep ^bash
+bash{env="",hostname="node-1",job="job-2",verb="get"} 0.003
+bash{env="",hostname="node-1",job="job-2",verb="put"} 0.13
+bash{env="",hostname="node-1",job="job-2",verb="time"} 0.5
+bash{env="dev",hostname="",job="job-1",verb="items"} 21
+```
+
 ## Usage
 
 ```console
