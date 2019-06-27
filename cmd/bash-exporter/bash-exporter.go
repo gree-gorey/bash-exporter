@@ -13,6 +13,7 @@ import (
 
 	"github.com/gree-gorey/bash-exporter/pkg/run"
 	"github.com/prometheus/client_golang/prometheus"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
 var (
@@ -55,7 +56,7 @@ func main() {
 		}
 	}
 
-	http.Handle("/metrics", prometheus.Handler())
+	http.Handle("/metrics", promhttp.Handler())
 	go Run(int(*interval), *path, names, labelsArr, *debug)
 	log.Fatal(http.ListenAndServe(*addr, nil))
 }
