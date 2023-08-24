@@ -13,7 +13,7 @@ type Output struct {
 
 type Schema struct {
 	Results map[string]float64 `json:"results"`
-	Labels map[string]string `json:"labels"`
+	Labels  map[string]string  `json:"labels"`
 }
 
 func (o *Output) RunJob(p *Params) {
@@ -27,12 +27,14 @@ func (o *Output) RunExec(path *string) {
 
 	out, err := exec.Command(*path).Output()
 	if err != nil {
-		log.Fatal(err)
+		log.Print(*path)
+		log.Print(err)
 	}
 
 	err = json.Unmarshal(out, &o.Schema)
 	if err != nil {
-		log.Fatal(err)
+		log.Print(*path)
+		log.Print(err)
 	}
 
 }
